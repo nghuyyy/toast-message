@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="toast">
+        
+    </div>
+    <div class="buttonrow">
+        <div onclick = showSuccess() class="btn btn--success">Show Success</div>
+        <div onclick = showWarning() class="btn btn--warning">Show Warning</div>
+        <div onclick = showError() class="btn btn--error">Show Error</div>
+    </div>
+    
+
+    <script>
+        function toast({title="",message="",type="info",delay=3000}) {
+            const main = document.getElementById("toast")
+            // Auto remove
+            
+
+            if (main) {
+                const toast = document.createElement("div")
+                var autoRemove = setTimeout(function() {
+                main.removeChild(toast)
+            },2000)
+                toast.onclick = function(e) {
+                    if(e.target.closest(".toast__close")) {
+                        main.removeChild(toast)
+                        clearTimeout(autoRemove)
+                    }
+                }
+                toast.classList.add("toast",`toast--${type}`)
+                toast.innerHTML = `
+            <div class="toast__icon ">
+            <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">${title}</h3>
+                <p class="toast__msg">${message}</p>
+            </div>
+            <div  class="toast__close">
+                <i  class="fa-solid fa-x"></i>
+            </div>  
+                `
+            main.appendChild(toast)
+            
+            }
+        }
+
+      
+
+        function showSuccess() {
+            toast({
+            title: "Success",
+            message: "Thành công rồi!",
+            type: "success",
+            delay: 3000
+        })
+        }
+        function showWarning() {
+            toast({
+            title: "Warning",
+            message: "Hãy kiểm tra lại!",
+            type: "warning",
+            delay: 3000
+        })
+        }
+        function showError() {
+            toast({
+            title: "Error",
+            message: "Thất bại!",
+            type: "error",
+            delay: 3000
+        })
+        }
+
+        function close() {
+            main.removeChild(toast)
+        }
+    </script>
+
+</body>
+</html>
